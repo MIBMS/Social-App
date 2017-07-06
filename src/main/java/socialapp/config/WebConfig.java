@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("socialapp.web")
+@ComponentScan({"socialapp.web", "socialapp.data"})
 public class WebConfig extends WebMvcConfigurerAdapter{
 	@Bean
 	public ViewResolver viewResolver(){
