@@ -103,7 +103,7 @@ public class ControllersTest {
 	public void shouldProcessRegistration() throws Exception{
 		UserRepository mockRepository = mock(UserRepository.class);
 		User unsaved = new User("jbauer", "24hours", "Jack", "Bauer");
-		User saved = new User(24L, "jbauer", "24hours", "Jack", "Bauer");
+		User saved = new User(1L, "jbauer", "24hours", "Jack", "Bauer");
 		when(mockRepository.save(unsaved)).thenReturn(saved);
 		
 		RegistrationController controller = new RegistrationController(mockRepository);

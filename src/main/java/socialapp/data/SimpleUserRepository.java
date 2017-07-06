@@ -6,10 +6,11 @@ import socialapp.User;
 
 @Repository
 public class SimpleUserRepository implements UserRepository {
-
+	private static Long lastUserID = 0L;
+	
 	@Override
 	public User save(User unsaved) {
-		return new User(24L, unsaved.getUsername(), unsaved.getPassword(),
+		return new User(lastUserID++, unsaved.getUsername(), unsaved.getPassword(),
 				unsaved.getFirstName(), unsaved.getLastName());
 	}
 

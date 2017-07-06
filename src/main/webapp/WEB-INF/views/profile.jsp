@@ -10,9 +10,9 @@
 </head>
 <body>
 	<h1>Your Profile</h1>
-	<c:out value="${spitter.username}" />
+	<c:out value="${user.username}" />
 	<br/>
-	<c:out value="${spitter.firstName}" />
-	<c:out value="${spitter.lastName}" />
+	<c:out value="${user.firstName}" />
+	<c:out value="${user.lastName}" />
 </body>
 </html>

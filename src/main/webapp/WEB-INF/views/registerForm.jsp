@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -10,20 +11,23 @@
 </head>
 <body>
 	<h1>Register</h1>
-	<form method="POST">
-		First Name: 
-		<input type="text" name="firstName" />
+	<form:form method="POST" commandName = "register-user" action = "register">
+		<form:label path="userID">ID:</form:label>
+		<form:input path="userID" />
 		<br/>
-		Last Name: 
-		<input type="text" name="lastName" />
+		<form:label path="firstName">First name:</form:label>
+		<form:input path="firstName" />
 		<br/>
-		Username: 
-		<input type="text" name="username" />
+		<form:label path="lastName">Last name:</form:label>
+		<form:input path="lastName" />
 		<br/>
-		Password: 
-		<input type="password" name="password" />
+		<form:label path="username">Username:</form:label>
+		<form:input path="username" />
+		<br/>
+		<form:label path="password">Password:</form:label>
+		<form:input path="password" />
 		<br/>
 		<input type="submit" value="Register" />
-	</form>
+	</form:form>
 </body>
 </html>

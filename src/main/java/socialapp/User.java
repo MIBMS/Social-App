@@ -19,15 +19,14 @@ public class User {
 	private String lastName;
 	
 	public User(){
-		this(null, null, null, null);
 	}
 	
 	public User(String username, String password, String firstName, String lastName){
 		this(null, username, password, firstName, lastName);
 	}
 	
-	public User(Long userId, String username, String password, String firstName, String lastName){
-		this.userID = 24L;
+	public User(Long userID, String username, String password, String firstName, String lastName){
+		this.userID = userID;
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
@@ -36,6 +35,26 @@ public class User {
 
 	public Long getUserID() {
 		return userID;
+	}
+
+	public void setUserID(Long userID) {
+		this.userID = userID;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getUsername() {
