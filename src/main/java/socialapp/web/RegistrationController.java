@@ -3,9 +3,11 @@ package socialapp.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import javax.validation.Valid;
 
 import socialapp.User;
 import socialapp.data.UserRepository;
@@ -33,7 +35,11 @@ public class RegistrationController {
 	 * @return
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String processRegistration(User user){
+	public String processRegistration(@Valid User user, Errors errors){
+		if (errors.hasErrors()){
+			return "registerForm";
+		}
+		
 		repository.save(user);
 		//asks the ViewResolver to redirect to a new URL, since DDL operations will be done
 		return "redirect:/SocialApp/" + user.getUsername();
