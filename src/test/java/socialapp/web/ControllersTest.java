@@ -5,9 +5,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.view.InternalResourceView;
 
 import socialapp.Post;
+import socialapp.User;
 import socialapp.data.PostRepository;
+import socialapp.data.UserRepository;
 
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -31,7 +35,7 @@ public class ControllersTest {
 	
 	@Test
 	public void shouldShowRecentPosts() throws Exception{
-		//creates expectedPosts and tries to get them from the mock Repository
+		//creates expectedPosts, sets up the mock repository so we get expected posts when findPosts is called
 		List<Post> expectedPosts = createPostList();
 		PostRepository postRepository = mock(PostRepository.class);
 		when(postRepository.findPosts(Long.MAX_VALUE, 20)).thenReturn(expectedPosts);
@@ -67,4 +71,53 @@ public class ControllersTest {
 		}
 		return posts;
 	}
+	
+	/**
+	 * tests getting a post via path parameters
+	 * @throws Exception 
+	 */
+	@Test
+	public void testPost() throws Exception{
+		Post expectedPost = new Post("Hello", new Date());
+		PostRepository mockRepository = mock(PostRepository.class);
+		when(mockRepository.findOne(123)).thenReturn(expectedPost);
+		
+		//creates a mock Mvc based on the mock repository
+		//expect a post view to be returned
+		//model should contain a post attribute with the expected post
+		PostController controller = new PostController(mockRepository);
+		MockMvc mockMvc = standaloneSetup(controller).build();
+		mockMvc.perform(get("/posts/123")).andExpect(view().name("post"))
+			.andExpect(model().attributeExists("post")).andExpect(model().attribute("post", expectedPost));
+	}
+	
+	@Test
+	public void testRegistrationForm() throws Exception{
+		UserRepository mockRepository = mock(UserRepository.class);
+		RegistrationController controller = new RegistrationController(mockRepository);
+		MockMvc mockMvc = standaloneSetup(controller).build();
+		mockMvc.perform(get("/SocialApp/register")).andExpect(view().name("registerForm"));
+	}
+	
+	@Test
+	public void shouldProcessRegistration() throws Exception{
+		UserRepository mockRepository = mock(UserRepository.class);
+		User unsaved = new User("jbauer", "24hours", "Jack", "Bauer");
+		User saved = new User(24L, "jbauer", "24hours", "Jack", "Bauer");
+		when(mockRepository.save(unsaved)).thenReturn(saved);
+		
+		RegistrationController controller = new RegistrationController(mockRepository);
+		MockMvc mockMvc = standaloneSetup(controller).build();
+		
+		//checks that the user is redirected to the correct address after the post request
+		mockMvc.perform(post("/SocialApp/register")
+				.param("firstName", "Jack")
+				.param("lastName", "Bauer")
+				.param("username", "jbauer")
+				.param("password", "24hours")).andExpect(redirectedUrl("/SocialApp/jbauer"));
+		
+		//checks that the mockMvc has run the save method of the user repository at least once
+		verify(mockRepository, atLeastOnce()).save(unsaved);
+	}
+	
 }

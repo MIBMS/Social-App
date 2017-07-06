@@ -5,11 +5,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Social App</title><link rel="stylesheet"type="text/css"href="<c:url value="/resources/css/screen.css" />" >
+<title>Social App</title>
+<link rel="stylesheet"type="text/css"href="<c:url value="/resources/css/screen.css" />" >
 </head>
 <body>
 	<h1>Welcome to Social App</h1>
 	<a href="<c:url value="/posts" />">Posts</a> |
-	<a href="<c:url value="/socialapp/register" />">Register</a></body>
+	<a href="<c:url value="/SocialApp/register" />">Register</a></body>
 </body>
 </html>

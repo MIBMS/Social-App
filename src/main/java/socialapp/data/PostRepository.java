@@ -2,8 +2,6 @@ package socialapp.data;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
 import socialapp.Post;
 
 /**
@@ -17,6 +15,7 @@ public interface PostRepository {
 	 * @return
 	 */
 	List<Post> findPosts(long max, int count);
+	Post findOne(long postID);
 }
 
 
